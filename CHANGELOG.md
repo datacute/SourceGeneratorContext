@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased][Unreleased]
+
+
+## [0.0.1-alpha]
 
 ### Added
+
 - `SourceGeneratorContext` library to help creators of source generators.
 - `[SourceGeneratorContext]` attribute to mark partial classes for generation.
 - Generate doc-comments to partial classes showing different portions of the context available to source generators.
@@ -49,4 +53,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - MetadataReferencesProvider's MetadataReference details
 - Diagnostic log of the source generation process and timing included.
 
-[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/main...develop
+[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/0.0.1-alpha...HEAD
+[0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/tag/0.0.1-alpha
