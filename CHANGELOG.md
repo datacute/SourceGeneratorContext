@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased][Unreleased]
+## [Unreleased]
 
+## [0.0.2-alpha] - 2025-07-12
 
-## [0.0.1-alpha][0.0.1-alpha]
+### Fixed
+
+- Packaging
+
+## [0.0.1-alpha] - 2025-07-12
 
 ### Added
 
@@ -54,4 +59,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Diagnostic log of the source generation process and timing included.
 
 [Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/0.0.1-alpha...develop
-[0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/tag/0.0.1-alpha
+[0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/0.0.1-alpha

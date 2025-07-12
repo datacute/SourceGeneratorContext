@@ -19,6 +19,7 @@
 
 		<IsRoslynAnalyzer>true</IsRoslynAnalyzer>
 		<DevelopmentDependency>true</DevelopmentDependency>
+		<DebugType>portable</DebugType>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
@@ -30,6 +31,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -52,32 +54,29 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- This ensures the generator DLL itself is placed in the analyzers folder -->
-		<!-- The SDK usually handles this automatically when Microsoft.CodeAnalysis.* are referenced -->
-		<!-- but explicitly adding it can sometimes help if packing behaves unexpectedly. -->
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-
 		<!-- Pack the attributes dll in the analyzers/dotnet/cs path -->
-		<None Include="$(OutputPath)\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+		<!-- Explicitly pack the main DLL as an analyzer -->
+		<None Include="$(TargetDir)$(TargetFileName)" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
 
-		<!-- Pack the attributes dll in the lib\netstandard2.0 path -->
-		<None Include="$(OutputPath)\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-		<None Include="$(OutputPath)\Datacute.SourceGeneratorContext.Attribute.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+	<ItemGroup>
+		<!-- Pack the attributes dll and related files in the lib/netstandard2.0 path -->
+		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
+		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.pdb" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
 
 		<None Include="../README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" />
+		<ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" IncludeAssets="none" />
 	</ItemGroup>
-
-	<Target Name="CopyDatacuteLightweightTracing" AfterTargets="Build">
-		<ItemGroup>
-			<DatacuteLightweightTracingFiles Include="$(PkgDatacute_LightweightTracing)\lib\netstandard2.0\*.dll" />
-		</ItemGroup>
-		<Copy SourceFiles="@(DatacuteLightweightTracingFiles)" DestinationFolder="$(OutputPath)" />
-	</Target>
 </Project>
