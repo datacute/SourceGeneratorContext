@@ -1,0 +1,5 @@
+root = true
+
+[*]
+# This only shows when calling AnalyzerConfigOptionsProvider.GetOptions(additionalText)
+example_editorconfig_value = true

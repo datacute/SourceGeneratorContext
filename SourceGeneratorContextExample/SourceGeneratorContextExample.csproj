@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<OutputType>Exe</OutputType>
+		<AssemblyName>Datacute.SourceGeneratorContextExample</AssemblyName>
+		<RootNamespace>Datacute.SourceGeneratorContextExample</RootNamespace>
+		<NeutralLanguage>en-NZ</NeutralLanguage>
+		<LangVersion>preview</LangVersion>
+		<TargetFramework>net9.0</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DemoSourceGeneratorProperty>DemoSourceGeneratorPropertyValue</DemoSourceGeneratorProperty>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<CompilerVisibleProperty Include="DemoSourceGeneratorProperty" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="README.md" />
+		<AdditionalFiles Include="README.md">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</AdditionalFiles>
+		<None Remove="Example Text File.txt" />
+		<AdditionalFiles Include="Example Text File.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="" />
+	  <ProjectReference Include="..\SourceGeneratorContext\SourceGeneratorContext.csproj" 
+	                    OutputItemType="Analyzer" 
+	                    ReferenceOutputAssembly="false" />
+	</ItemGroup>
+
+<!--	<ItemGroup>-->
+<!--	  <PackageReference Include="Datacute.LightweightTracing" Version="1.0.0" PrivateAssets="all" />-->
+<!--	</ItemGroup>-->
+</Project>
