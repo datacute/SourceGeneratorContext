@@ -6,6 +6,7 @@
 		<OutputType>Exe</OutputType>
 		<AssemblyName>Datacute.SourceGeneratorContextExample</AssemblyName>
 		<RootNamespace>Datacute.SourceGeneratorContextExample</RootNamespace>
+		<IsPackable>false</IsPackable>
 		<NeutralLanguage>en-NZ</NeutralLanguage>
 		<LangVersion>preview</LangVersion>
 		<TargetFramework>net9.0</TargetFramework>

@@ -5,6 +5,7 @@
         <LangVersion>12</LangVersion>
         <AssemblyName>Datacute.SourceGeneratorContext.Attribute</AssemblyName>
         <RootNamespace>Datacute.SourceGeneratorContext</RootNamespace>
+        <IsPackable>false</IsPackable>
         <Nullable>enable</Nullable>
         <AssemblyVersion>1.0.0</AssemblyVersion>
     </PropertyGroup>
