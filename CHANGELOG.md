@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased][Unreleased]
 
 
-## [0.0.1-alpha]
+## [0.0.1-alpha][0.0.1-alpha]
 
 ### Added
 
@@ -53,5 +53,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - MetadataReferencesProvider's MetadataReference details
 - Diagnostic log of the source generation process and timing included.
 
-[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/0.0.1-alpha...HEAD
+[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/0.0.1-alpha...develop
 [0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/tag/0.0.1-alpha
