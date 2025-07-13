@@ -61,8 +61,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Pack the attributes dll in the analyzers/dotnet/cs path -->
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<!-- Explicitly pack the main DLL as an analyzer -->
 		<None Include="$(TargetDir)$(TargetFileName)" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
