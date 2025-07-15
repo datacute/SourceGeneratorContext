@@ -21,7 +21,7 @@ jobs:
     - name: Restore, Build, and Pack
       run: |
         dotnet restore *.sln
-        dotnet build *.sln --configuration Release --no-restore  -p:ContinuousIntegrationBuild=true
+        dotnet build *.sln --configuration Release --no-restore  -p:ContinuousIntegrationBuild=true  -p:GeneratePackageOnBuild=false
         dotnet pack *.sln --configuration Release --no-build --output ./artifacts  -p:ContinuousIntegrationBuild=true
 
     - name: Publish to NuGet
