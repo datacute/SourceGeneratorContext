@@ -56,6 +56,10 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="Datacute.AdditionalTextConstantGenerator" Version="1.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Datacute.IncrementalGeneratorExtensions" Version="1.0.3">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -74,21 +78,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Pack the attributes dll and related files in the lib/netstandard2.0 path -->
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.pdb" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-
 		<None Include="../README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" IncludeAssets="none" />
+	  <Compile Remove="Templates\SourceGeneratorContextAttribute.cs" />
+	  <AdditionalFiles Include="Templates\SourceGeneratorContextAttribute.cs" />
+	  <AdditionalFiles Include="Templates\IncludeFlags.cs" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Include="..\SourceGeneratorContext.Attribute\IncludeFlags.cs">
-	    <Link>IncludeFlags.cs</Link>
-	  </Compile>
-	</ItemGroup>
 </Project>

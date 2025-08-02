@@ -10,6 +10,16 @@ public sealed class Generator : IIncrementalGenerator
     {
         LightweightTrace.Add(GeneratorStage.Initialize);
 
+        context.RegisterPostInitializationOutput(static postInitializationContext =>
+        {
+            postInitializationContext.AddSource(
+                Templates.IncludeFlagsHintName,
+                Templates.IncludeFlags);
+            postInitializationContext.AddSource(
+                Templates.AttributeHintName,
+                Templates.SourceGeneratorContextAttribute);
+        });
+
         var attributeContexts =
             context.SelectAttributeContexts(
                 Templates.AttributeFullyQualified,
