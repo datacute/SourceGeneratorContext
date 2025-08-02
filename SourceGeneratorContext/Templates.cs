@@ -15,14 +15,14 @@ internal static class Templates
 ";
 
     public const string ClassDocCommentsBegin = /* language=c# */
-        @"{0}/// <summary>
-{0}/// When this item is examined by a source generator...<br/><br/>
+        @"/// <summary>
+/// When this item is examined by a source generator...<br/><br/>
 ";
 
     public const string ClassDocCommentsSectionBegin = /* language=c# */
-        @"{0}/// {1} contains:
-{0}/// <list type=""table"">
-{0}/// <listheader><term>Key</term><description>Value</description></listheader>
+        @"/// {0} contains:
+/// <list type=""table"">
+/// <listheader><term>Key</term><description>Value</description></listheader>
 ";
 
     public const string OptionsLine = /* language=c# */
@@ -30,11 +30,11 @@ internal static class Templates
 ";
 
     public const string ClassDocCommentsSectionEnd = /* language=c# */
-        @"{0}/// </list><br/>
+        @"/// </list><br/>
 ";
 
     public const string ClassDocCommentsEnd = /* language=c# */
-        @"{0}/// </summary>
+        @"/// </summary>
 ";
 
     public static string EscapeStringForDocComments(string input) =>

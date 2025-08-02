@@ -51,7 +51,15 @@
 		<CompilerVisibleProperty Include="example_editorconfig_value" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<Datacute_IncludeReadmeFile>true</Datacute_IncludeReadmeFile>
+	</PropertyGroup>
+	
 	<ItemGroup>
+		<PackageReference Include="Datacute.IncrementalGeneratorExtensions" Version="1.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
@@ -76,5 +84,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" IncludeAssets="none" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Include="..\SourceGeneratorContext.Attribute\IncludeFlags.cs">
+	    <Link>IncludeFlags.cs</Link>
+	  </Compile>
 	</ItemGroup>
 </Project>

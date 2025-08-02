@@ -20,94 +20,19 @@ public class SourceGeneratorContextAttribute : Attribute
     /// There is a huge amount of information available, but Visual Studio does not scroll doc-comments.
     /// So either IncludeAll and view the generated source, or set one of the named parameters to control what gets output:
     /// <code>
-    /// [SourceGeneratorContext(IncludeAll = true)]
+    /// [SourceGeneratorContext(IncludeFlags.All)]
     /// internal partial class Example;
     /// </code>
     /// </remarks>
-    public SourceGeneratorContextAttribute()
+    public SourceGeneratorContextAttribute(IncludeFlags flags = IncludeFlags.Summary)
     {
+        IncludeFlags = flags;
     }
 
     /// <summary>
-    /// Set to true to include all available details.
+    /// Flags to control what information is included in the generated doc-comments.
     /// </summary>
-    public bool IncludeAll { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.TargetSymbol details.
-    /// </summary>
-    public bool IncludeAttributeContextTargetSymbol { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.TargetSymbol as ITypeSymbol details.
-    /// </summary>
-    public bool IncludeAttributeContextTypeSymbol { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.TargetSymbol as INamedTypeSymbol details.
-    /// </summary>
-    public bool IncludeAttributeContextNamedTypeSymbol { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.TargetNode details.
-    /// </summary>
-    public bool IncludeAttributeContextTargetNode { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.Attributes details.
-    /// </summary>
-    public bool IncludeAttributeContextAttributes { get; set; }
-
-    /// <summary>
-    /// Set to true to include the GeneratorAttributeSyntaxContext.GetAttributes() details.
-    /// </summary>
-    public bool IncludeAttributeContextAllAttributes { get; set; }
-
-    /// <summary>
-    /// Set to true to include the AnalyzerConfigOptionsProvider's GlobalOptions details.
-    /// </summary>
-    public bool IncludeGlobalOptions { get; set; }
-
-    /// <summary>
-    /// Set to true to include the CompilationProvider's Compilation details.
-    /// </summary>
-    public bool IncludeCompilation { get; set; }
-
-    /// <summary>
-    /// Set to true to include the CompilationProvider's Compilation.Options details.
-    /// </summary>
-    public bool IncludeCompilationOptions { get; set; }
-
-    /// <summary>
-    /// Set to true to include the CompilationProvider's Compilation.Assembly details.
-    /// </summary>
-    public bool IncludeCompilationAssembly { get; set; }
-
-    /// <summary>
-    /// Set to true to include the Counts of CompilationProvider's Compilation.References, Compilation.DirectiveReferences, Compilation.ExternalReferences, and Compilation.ReferencedAssemblyNames.
-    /// </summary>
-    public bool IncludeCompilationReferences { get; set; }
-
-    /// <summary>
-    /// Set to true to include the ParseOptionsProvider's ParseOptions details.
-    /// </summary>
-    public bool IncludeParseOptions { get; set; }
-
-    /// <summary>
-    /// Set to true to include the AdditionalTextsProvider's AdditionalText details.
-    /// </summary>
-    public bool IncludeAdditionalTexts { get; set; }
-
-    /// <summary>
-    /// Set to true to include the AdditionalTextsProvider's AdditionalText details combined with AnalyzerConfigOptionsProvider's AnalyzerConfigOptions for the AdditionalText.
-    /// </summary>
-    public bool IncludeAdditionalTextsOptions { get; set; }
-
-    /// <summary>
-    /// Set to true to include the MetadataReferencesProvider's MetadataReference details.
-    /// </summary>
-    public bool IncludeMetadataReferences { get; set; }
-
+    public IncludeFlags IncludeFlags { get; set; }
 
     #region Demonstration purposes only
 
@@ -123,8 +48,7 @@ public class SourceGeneratorContextAttribute : Attribute
     /// <param name="exampleOptionalParameter"></param>
     public
         SourceGeneratorContextAttribute(
-            string? exampleOptionalParameter =
-                null) // only used for demonstrating working with Constructor Arguments
+            string exampleOptionalParameter) // only used for demonstrating working with Constructor Arguments
     {
         // The constructor arguments do not need to be assigned to fields or properties
         // as the source of the supplied values is what is available to the source generator

@@ -18,10 +18,8 @@ public readonly struct AnalyzerConfigOptionsDescription
         DocComments = sb.ToString();
     }
 
-    public static AnalyzerConfigOptionsDescription Select(AnalyzerConfigOptionsProvider provider, CancellationToken token)
+    public static AnalyzerConfigOptionsDescription Selector(AnalyzerConfigOptionsProvider provider, CancellationToken token)
     {
-        LightweightTrace.Add(TrackingNames.AnalyzerConfigOptionsDescription_Select);
-
         token.ThrowIfCancellationRequested();
         return new AnalyzerConfigOptionsDescription(provider.GlobalOptions);
     }
