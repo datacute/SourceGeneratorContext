@@ -123,8 +123,7 @@ public class CodeGenerator : SourceTextGeneratorBase<AttributeData>
         if (_contextData.IncludeAdditionalTexts)
         {
             Buffer.AppendFormatLines(Templates.ClassDocCommentsSectionBegin, "Additional Texts");
-            // todo: indent
-            Buffer.Direct.AddComment("Number of Additional Texts", _additionalTextDescriptions.Length);
+            Buffer.AddComment("Number of Additional Texts", _additionalTextDescriptions.Length);
             foreach (var additionalTextDescription in _additionalTextDescriptions)
             {
                 Buffer.AppendLines(additionalTextDescription.DocComments);
@@ -139,8 +138,11 @@ public class CodeGenerator : SourceTextGeneratorBase<AttributeData>
         if (_contextData.IncludeMetadataReferences)
         {
             Buffer.AppendFormatLines(Templates.ClassDocCommentsSectionBegin, "Metadata References");
-            // todo: indent
-            Buffer.Direct.AddComment("Number of Metadata References", _metadataReferenceDescriptions.Length);
+            Buffer.AddComment("Number of Metadata References", _metadataReferenceDescriptions.Length);
+            if (_metadataReferenceDescriptions.Length > 0)
+            {
+                Buffer.AddComment("Properties Kind, EmbedInteropTypes, Aliases", "[Skipped for brevity]");
+            }
             foreach (var metadataReferenceDescription in _metadataReferenceDescriptions)
             {
                 Buffer.AppendLines(metadataReferenceDescription.DocComments);
