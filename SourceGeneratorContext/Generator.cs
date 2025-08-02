@@ -12,6 +12,8 @@ public sealed class Generator : IIncrementalGenerator
 
         context.RegisterPostInitializationOutput(static postInitializationContext =>
         {
+            LightweightTrace.Add(GeneratorStage.RegisterPostInitializationOutput);
+
             postInitializationContext.AddSource(
                 Templates.IncludeFlagsHintName,
                 Templates.IncludeFlags);
@@ -79,6 +81,8 @@ public sealed class Generator : IIncrementalGenerator
 
         var hintName = attributeContext.CreateHintName("SourceGeneratorContext");
         var generatedSource = codeGenerator.GetSourceText();
+
+        LightweightTrace.Add(GeneratorStage.SourceProductionContextAddSource);
         sourceProductionContext.AddSource(hintName, generatedSource);
     }
 }
