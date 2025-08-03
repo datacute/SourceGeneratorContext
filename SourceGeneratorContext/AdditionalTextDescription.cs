@@ -4,12 +4,12 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Datacute.SourceGeneratorContext;
 
-public readonly struct AdditionalTextDescription
+public readonly record struct AdditionalTextDescription
 {
     public readonly string DocComments;
     public readonly string OptionsComments;
 
-    public AdditionalTextDescription(AdditionalText additionalText, AnalyzerConfigOptions? options = null)
+    private AdditionalTextDescription(AdditionalText additionalText, AnalyzerConfigOptions? options = null)
     {
         var sb = new StringBuilder();
         sb.AddComment("Path", additionalText.Path);
@@ -36,16 +36,14 @@ public readonly struct AdditionalTextDescription
         OptionsComments = sb.ToString();
     }
 
-    public static AdditionalTextDescription Select(AdditionalText additionalText, CancellationToken token)
+    public static AdditionalTextDescription Selector(AdditionalText additionalText, CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
         return new AdditionalTextDescription(additionalText);
     }
 
-    public static AdditionalTextDescription Select((AdditionalText additionalText, AnalyzerConfigOptionsProvider optionsProvider) args, CancellationToken token)
+    public static AdditionalTextDescription Selector((AdditionalText additionalText, AnalyzerConfigOptionsProvider optionsProvider) args, CancellationToken token)
     {
-        LightweightTrace.Add(TrackingNames.AdditionalTextDescription_Select);
-
         token.ThrowIfCancellationRequested();
         var options = args.optionsProvider.GetOptions(args.additionalText);
         return new AdditionalTextDescription(args.additionalText, options);

@@ -30,10 +30,8 @@ public readonly struct ParseOptionsDescription
         DocComments = sb.ToString();
     }
 
-    public static ParseOptionsDescription Select(ParseOptions parseOptions, CancellationToken token)
+    public static ParseOptionsDescription Selector(ParseOptions parseOptions, CancellationToken token)
     {
-        LightweightTrace.Add(TrackingNames.ParseOptionsDescription_Select);
-
         token.ThrowIfCancellationRequested();
         return new ParseOptionsDescription(parseOptions);
     }

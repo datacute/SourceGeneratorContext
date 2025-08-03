@@ -21,53 +21,53 @@ public static partial class ClassInGlobalNamespace;
 
 #region All 'include' options
 
-[SourceGeneratorContext(IncludeAttributeContextTargetSymbol = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextTargetSymbol)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextTargetSymbol;
 
-[SourceGeneratorContext(IncludeAttributeContextTypeSymbol = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextTypeSymbol)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextTypeSymbol;
 
-[SourceGeneratorContext(IncludeAttributeContextNamedTypeSymbol = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextNamedTypeSymbol)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextNamedTypeSymbol;
 
-[SourceGeneratorContext(IncludeAttributeContextTargetNode = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextTargetNode)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextTargetNode;
 
-[SourceGeneratorContext(IncludeAttributeContextAttributes = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextAttributes)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextAttributes;
 
-[SourceGeneratorContext(IncludeAttributeContextAllAttributes = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextAllAttributes)]
 public partial class ViewClassDocsToSeeGeneratorAttributeSyntaxContextAllAttributes;
 
-[SourceGeneratorContext(IncludeGlobalOptions = true)]
+[SourceGeneratorContext(IncludeFlags.GlobalOptions)]
 public partial class ViewClassDocsToSeeAnalyzerConfigOptionsProviderGlobalOptions;
 
-[SourceGeneratorContext(IncludeCompilation = true)]
+[SourceGeneratorContext(IncludeFlags.Compilation)]
 public partial class ViewClassDocsToSeeCompilation;
 
-[SourceGeneratorContext(IncludeCompilationOptions = true)]
+[SourceGeneratorContext(IncludeFlags.CompilationOptions)]
 public partial class ViewClassDocsToSeeCompilationOptions;
 
-[SourceGeneratorContext(IncludeCompilationAssembly = true)]
+[SourceGeneratorContext(IncludeFlags.CompilationAssembly)]
 public partial class ViewClassDocsToSeeCompilationAssembly;
 
-[SourceGeneratorContext(IncludeCompilationReferences = true)]
+[SourceGeneratorContext(IncludeFlags.CompilationReferences)]
 public partial class ViewClassDocsToSeeCompilationReferences;
 
-[SourceGeneratorContext(IncludeParseOptions = true)]
+[SourceGeneratorContext(IncludeFlags.ParseOptions)]
 public partial class ViewClassDocsToSeeParseOptions;
 
-[SourceGeneratorContext(IncludeAdditionalTexts = true)]
+[SourceGeneratorContext(IncludeFlags.AdditionalTexts)]
 public partial class ViewClassDocsToSeeAdditionalTexts;
 
-[SourceGeneratorContext(IncludeMetadataReferences = true)]
+[SourceGeneratorContext(IncludeFlags.MetadataReferences)]
 public partial class ViewClassDocsToSeeMetadataReferences;
 
 // IncludeAdditionalTextsOptions seems really repetitive, so is not included in "includeAll"
-[SourceGeneratorContext(IncludeAdditionalTexts = true, IncludeAdditionalTextsOptions = true)]
+[SourceGeneratorContext(IncludeFlags.AdditionalTexts | IncludeFlags.AdditionalTextsOptions)]
 public partial class ViewClassDocsToSeeAdditionalTextsWithOptions;
 
-[SourceGeneratorContext(IncludeAll = true)]
+[SourceGeneratorContext(IncludeFlags.All)]
 public partial class ViewClassDocsToSeeAllAvailableDetails;
 
 #endregion
@@ -150,7 +150,7 @@ namespace ExampleNamespace
     [SourceGeneratorContext]
     internal static partial class ClassInNamespace;
 
-    [SourceGeneratorContext(IncludeAttributeContextTypeSymbol = true)]
+    [SourceGeneratorContext(IncludeFlags.AttributeContextTypeSymbol)]
     internal partial record RecordClass(string Example)
     {
         [SourceGeneratorContext]
@@ -165,7 +165,7 @@ namespace ExampleNamespace
         {
             [Obsolete("Included in `TargetSymbol.AllAttributes()`")]
             [SourceGeneratorContext("Included in `Attributes` and `TargetSymbol.AllAttributes()`")]
-            [SourceGeneratorContext]
+            [SourceGeneratorContext(IncludeFlags.AttributeContextAllAttributes)]
             private static partial class InnerClassWithinMultipleParents;
         }
 
@@ -178,10 +178,10 @@ namespace ExampleNamespace
     }
 }
 
-[SourceGeneratorContext(IncludeAttributeContextTypeSymbol = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextTypeSymbol)]
 public partial struct ExampleStructure;
 
-[SourceGeneratorContext(IncludeAttributeContextTypeSymbol = true)]
+[SourceGeneratorContext(IncludeFlags.AttributeContextTypeSymbol)]
 public partial interface IExampleInterface;
 
 

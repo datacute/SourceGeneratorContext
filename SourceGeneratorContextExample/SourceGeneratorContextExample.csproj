@@ -30,13 +30,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="" />
 	  <ProjectReference Include="..\SourceGeneratorContext\SourceGeneratorContext.csproj" 
 	                    OutputItemType="Analyzer" 
 	                    ReferenceOutputAssembly="false" />
 	</ItemGroup>
-
-<!--	<ItemGroup>-->
-<!--	  <PackageReference Include="Datacute.LightweightTracing" Version="1.0.0" PrivateAssets="all" />-->
-<!--	</ItemGroup>-->
 </Project>

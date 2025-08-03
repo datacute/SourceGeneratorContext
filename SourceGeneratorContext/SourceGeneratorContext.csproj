@@ -51,7 +51,19 @@
 		<CompilerVisibleProperty Include="example_editorconfig_value" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<Datacute_IncludeReadmeFile>true</Datacute_IncludeReadmeFile>
+	</PropertyGroup>
+	
 	<ItemGroup>
+		<PackageReference Include="Datacute.AdditionalTextConstantGenerator" Version="1.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Datacute.IncrementalGeneratorExtensions" Version="1.0.5">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
@@ -61,22 +73,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Pack the attributes dll in the analyzers/dotnet/cs path -->
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<!-- Explicitly pack the main DLL as an analyzer -->
 		<None Include="$(TargetDir)$(TargetFileName)" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<!-- Pack the attributes dll and related files in the lib/netstandard2.0 path -->
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.dll" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.xml" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-		<None Include="..\SourceGeneratorContext.Attribute\bin\$(Configuration)\netstandard2.0\Datacute.SourceGeneratorContext.Attribute.pdb" Pack="true" PackagePath="lib/netstandard2.0" Visible="false" />
-
 		<None Include="../README.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SourceGeneratorContext.Attribute\SourceGeneratorContext.Attribute.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" IncludeAssets="none" />
+	  <Compile Remove="Templates\SourceGeneratorContextAttribute.cs" />
+	  <AdditionalFiles Include="Templates\SourceGeneratorContextAttribute.cs" />
+	  <AdditionalFiles Include="Templates\IncludeFlags.cs" />
 	</ItemGroup>
+
 </Project>

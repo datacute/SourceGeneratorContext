@@ -1,69 +1,88 @@
-﻿using System.Collections.Immutable;
+﻿using Datacute.IncrementalGeneratorExtensions;
 using Microsoft.CodeAnalysis;
 
 namespace Datacute.SourceGeneratorContext;
-
-// Record structs to replace complex tuple types
-public record struct AttributeAndOptions(AttributeContext AttributeContext, AnalyzerConfigOptionsDescription Options);
-public record struct AttributeOptionsAndCompilation(AttributeAndOptions AttributeAndOptions, CompilationDescription Compilation);
-public record struct AttributeOptionsCompilationAndParseOptions(AttributeOptionsAndCompilation AttributeOptionsAndCompilation, ParseOptionsDescription ParseOptions);
-public record struct AttributeOptionsCompilationParseAndAdditionalTexts(AttributeOptionsCompilationAndParseOptions AttributeOptionsCompilationAndParseOptions, ImmutableArray<AdditionalTextDescription> AdditionalTexts);
-public record struct GeneratorSourceData(AttributeOptionsCompilationParseAndAdditionalTexts Core, ImmutableArray<MetadataReferenceDescription> MetadataReferences);
 
 [Generator(LanguageNames.CSharp)]
 public sealed class Generator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        LightweightTrace.Add(TrackingNames.Generator_Initialize);
+        LightweightTrace.Add(GeneratorStage.Initialize);
+
+        context.RegisterPostInitializationOutput(static postInitializationContext =>
+        {
+            LightweightTrace.Add(GeneratorStage.RegisterPostInitializationOutput);
+
+            postInitializationContext.AddSource(
+                Templates.IncludeFlagsHintName,
+                Templates.IncludeFlags);
+            postInitializationContext.AddSource(
+                Templates.AttributeHintName,
+                Templates.SourceGeneratorContextAttribute);
+        });
 
         var attributeContexts =
-            context.SyntaxProvider.ForAttributeWithMetadataName(
-                    fullyQualifiedMetadataName: Templates.AttributeFullyQualified, 
-                    predicate: AttributeContext.Predicate, 
-                    transform: AttributeContext.Transform)
-                .WithTrackingName(TrackingNames.InitialExtraction);
+            context.SelectAttributeContexts(
+                Templates.AttributeFullyQualified,
+                AttributeData.Collector);
 
-        var globalOptionsDescriptionValueProvider = context.AnalyzerConfigOptionsProvider.Select(AnalyzerConfigOptionsDescription.Select);
-        var compilationDescriptionValueProvider = context.CompilationProvider.Select(CompilationDescription.Select);
-        var parseOptionsDescriptionValueProvider = context.ParseOptionsProvider.Select(ParseOptionsDescription.Select);
+        var globalOptionsDescriptionValueProvider = 
+            context.AnalyzerConfigOptionsProvider
+                .Select(AnalyzerConfigOptionsDescription.Selector)
+                .WithTrackingName(GeneratorStage.AnalyzerConfigOptionsProviderSelect);
 
-        // It is possible to get config options FOR each additional text, but showing them is very repetitive
-        var additionalTextDescriptionsValuesProvider = context.AdditionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider).Select(AdditionalTextDescription.Select);
-        // var additionalTextDescriptionsValuesProvider = context.AdditionalTextsProvider.Select(AdditionalTextDescription.Select);
-        var metadataReferenceDescriptionsValuesProvider = context.MetadataReferencesProvider.Select(MetadataReferenceDescription.Select);
+        var compilationDescriptionValueProvider = 
+            context.CompilationProvider
+                .Select(CompilationDescription.Selector)
+                .WithTrackingName(GeneratorStage.CompilationProviderSelect);
+
+        var parseOptionsDescriptionValueProvider = 
+            context.ParseOptionsProvider
+                .Select(ParseOptionsDescription.Selector)
+                .WithTrackingName(GeneratorStage.ParseOptionsProviderSelect);
+
+        var additionalTextDescriptionsValuesProvider = 
+            context.AdditionalTextsProvider
+                .Combine(context.AnalyzerConfigOptionsProvider)
+                .Select(AdditionalTextDescription.Selector)
+                .WithTrackingName(GeneratorStage.AdditionalTextsProviderSelect);
+
+        var metadataReferenceDescriptionsValuesProvider = 
+            context.MetadataReferencesProvider
+                .Select(MetadataReferenceDescription.Selector)
+                .WithTrackingName(GeneratorStage.MetadataReferencesProviderSelect);
 
         var source = attributeContexts
             .Combine(globalOptionsDescriptionValueProvider)
-            .Select((x, _) => new AttributeAndOptions(x.Left, x.Right))
+            .Select(SourceBuilder.WithOptions)
             .Combine(compilationDescriptionValueProvider)
-            .Select((x, _) => new AttributeOptionsAndCompilation(x.Left, x.Right))
+            .Select(SourceBuilder.WithCompilation)
             .Combine(parseOptionsDescriptionValueProvider)
-            .Select((x, _) => new AttributeOptionsCompilationAndParseOptions(x.Left, x.Right))
-            .Combine(additionalTextDescriptionsValuesProvider.Collect())
-            .Select((x, _) => new AttributeOptionsCompilationParseAndAdditionalTexts(x.Left, x.Right))
-            .Combine(metadataReferenceDescriptionsValuesProvider.Collect())
-            .Select((x, _) => new GeneratorSourceData(x.Left, x.Right))
-            .WithTrackingName(TrackingNames.Combine);
-
+            .Select(SourceBuilder.WithParseOptions)
+            .CombineEquatable(additionalTextDescriptionsValuesProvider)
+            .Select(SourceBuilder.WithAdditionalTexts)
+            .CombineEquatable(metadataReferenceDescriptionsValuesProvider)
+            .Select(SourceBuilder.WithMetadataReferences);
+        
         context.RegisterSourceOutput(source, Action);
     }
 
-    private void Action(SourceProductionContext sourceProductionContext, GeneratorSourceData source)
+    private void Action(SourceProductionContext sourceProductionContext, SourceBuilder source)
     {
-        LightweightTrace.Add(TrackingNames.Generator_Action);
+        LightweightTrace.Add(GeneratorStage.RegisterSourceOutput);
 
-        var attributeContext = source.Core.AttributeOptionsCompilationAndParseOptions.AttributeOptionsAndCompilation.AttributeAndOptions.AttributeContext;
+        var attributeContext = source.AttributeContext;
 
         var cancellationToken = sourceProductionContext.CancellationToken;
-        cancellationToken.ThrowIfCancellationRequested();
+        cancellationToken.ThrowIfCancellationRequested(0);
 
-        var codeGenerator = new CodeGenerator(source, cancellationToken);
+        var codeGenerator = new CodeGenerator(source.Build(), cancellationToken);
 
-        var hintName = attributeContext.DisplayString.GetHintName();
-        var generatedSource = codeGenerator.GenerateSource();
+        var hintName = attributeContext.CreateHintName("SourceGeneratorContext");
+        var generatedSource = codeGenerator.GetSourceText();
+
+        LightweightTrace.Add(GeneratorStage.SourceProductionContextAddSource);
         sourceProductionContext.AddSource(hintName, generatedSource);
     }
-    
-    
 }

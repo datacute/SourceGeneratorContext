@@ -3,10 +3,10 @@ using Microsoft.CodeAnalysis;
 
 namespace Datacute.SourceGeneratorContext;
 
-public readonly struct MetadataReferenceDescription
+public readonly record struct MetadataReferenceDescription
 {
     public readonly string DocComments;
-    public MetadataReferenceDescription(MetadataReference metadataReference)
+    private MetadataReferenceDescription(MetadataReference metadataReference)
     {
         var sb = new StringBuilder();
         sb.AddComment("Display", metadataReference.Display);
@@ -17,10 +17,8 @@ public readonly struct MetadataReferenceDescription
         DocComments = sb.ToString();
     }
 
-    public static MetadataReferenceDescription Select(MetadataReference metadataReference, CancellationToken token)
+    public static MetadataReferenceDescription Selector(MetadataReference metadataReference, CancellationToken token)
     {
-        //LightweightTrace.Add(TrackingNames.MetadataReferenceDescription_Select);
-
         token.ThrowIfCancellationRequested();
         return new MetadataReferenceDescription(metadataReference);
     }

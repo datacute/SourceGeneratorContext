@@ -127,10 +127,8 @@ public readonly struct CompilationDescription
         // SyntaxTreesDocComments = sb.ToString();
     }
 
-    public static CompilationDescription Select(Compilation compilation, CancellationToken token)
+    public static CompilationDescription Selector(Compilation compilation, CancellationToken token)
     {
-        LightweightTrace.Add(TrackingNames.CompilationDescription_Select);
-
         token.ThrowIfCancellationRequested();
         return new CompilationDescription(compilation);
     }
