@@ -2,10 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.0] - 2025-08-03
+
+### Changed
+
+- Massive simplification by using Datacute.IncrementalGeneratorExtensions
+- Changed to use a builder style pattern for the pipeline Combines.
+- Replaced Numerous Attribute "Include x" Properties with a single flags enum.
+- Generate flags enum and attribute rather than including them in the package. (This results in more consistent package treatment as a source generator.)
+
+### Added
+
+- More docs
 
 ## [0.0.2-alpha] - 2025-07-12
 
@@ -58,5 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - MetadataReferencesProvider's MetadataReference details
 - Diagnostic log of the source generation process and timing included.
 
-[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/0.0.1-alpha...develop
-[0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/0.0.1-alpha
+[Unreleased]: https://github.com/datacute/SourceGeneratorContext/compare/1.0.0...develop
+[1.0.0]: https://github.com/datacute/SourceGeneratorContext/releases/tag/1.0.0
+[0.0.2-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/tag/0.0.2-alpha
+[0.0.1-alpha]: https://github.com/datacute/SourceGeneratorContext/releases/tag/0.0.1-alpha
